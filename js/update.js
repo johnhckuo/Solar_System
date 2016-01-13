@@ -1,19 +1,21 @@
-
-function planetUpdate(currentMinute){
-
-    
-    var timeSplice = 2*Math.PI/totalMinute;
-
-//    parent.rotation.y = timeSplice*currentMinute;
-    earthParent.rotation.y = timeSplice*currentMinute;
-    earthCloud.rotation.y = timeSplice*currentMinute;
-    //parent.rotation.y = timeSplice*currentMinute;
-  //  parent[2].rotation.y = timeSplice*currentMinute*2;
-  //  parent[3].rotation.y = timeSplice*currentMinute*4;
-  //  parent[4].rotation.y = timeSplice*currentMinute*3;
+function revolution(mesh, speed){
+    mesh.rotation.z += speed/1000;
 }
 
-
+function planetSpin(){
+    var spinRate = 0.01;
+    Sun.rotation.z += spinRate;
+    mercury.rotation.y += spinRate;
+    venus.rotation.y += spinRate;
+    earth.rotation.y += spinRate;
+    moon.rotation.y += spinRate;
+    mars.rotation.y += spinRate;
+    jupiter.rotation.y += spinRate;
+    saturn.rotation.y += spinRate;
+    uranus.rotation.y += spinRate;
+    neptune.rotation.y += spinRate;
+    pluto.rotation.y += spinRate;
+}
 
 
 function trackUpdate (currentMinute){
