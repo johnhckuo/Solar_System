@@ -60,6 +60,9 @@ function createEarth(earthSize, earthRange){
         specularMap : THREE.ImageUtils.loadTexture('img/earthspec1k.jpg'),
         specular    : new THREE.Color('grey')
     })
+
+
+
     var mesh    = new THREE.Mesh(geometry, material)
 
     

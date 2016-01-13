@@ -170,12 +170,8 @@ $(document).ready(function(){
     pluto = createPluto(earthSize*calculateVolume(radius[10]), earthRange*earthRange*rangeProportion[10]);
 
 
-
-
-
-    
-    earthCloud = createEarthCloud(earthSize*calculateVolume(radius[3]), earthRange*rangeProportion[3]);
-    earth.add(earthCloud);
+    //earthCloud = createEarthCloud(earthSize*calculateVolume(radius[3]), earthRange*rangeProportion[3]);
+    //earth.add(earthCloud);
 
     
  
@@ -253,17 +249,8 @@ $(document).ready(function(){
             revolution(pivot[i], revolveSpeed[i])
 
         }
+        planetSpin();
         stats.update();
-        /*                                                            //this comment can use to reflect real world day/night condition
-        var currentMinute = calculateMinute(hours, minute);
-        skyUpdate(currentMinute);
-        sunUpdate(currentMinute);
-        */
-
-        if (testCounter == totalMinute)
-            testCounter = 0;
-        planetUpdate(testCounter);
-        testCounter+=2;
 
             
 
@@ -397,6 +384,3 @@ function onWindowResize() {
 
 }
 
-function revolution(mesh, speed){
-    mesh.rotation.z += speed/1000;
-}
