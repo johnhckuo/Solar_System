@@ -12,12 +12,12 @@ var earthSize = 1;
 var earthRange = 10000000;
 var skySize = 1000000000;
 //var radius = [109, 0.3824, 0.95, 1, 0.273,0.53, 11.2, 9.46, 4.0, 3.88, 0.18];
-var radius = [110, 20, 40, 50, 10,30, 100, 90, 80, 60, 10];
+var radius = [110, 20, 40, 50, 10, 100, 90, 80, 60, 10];
 
 
 //var rangeProportion = [0,0.4,0.7,1,0.27,1.5,5.2,9.5,19.6,30,39];
-var rangeProportion = [0,0.4,0.7,1,0.27,1.5,3,5,7,9,11];
-
+var rangeProportion = [0,0.4,0.7,1,0.27,3,5,7,9,11];
+var revolveSpeed = [0, 4.16, 1.62, 1, 0.53, 0.084, 0.034, 0.012, 0.006, 0.004]
 
 
 $(document).ready(function(){
@@ -39,7 +39,8 @@ $(document).ready(function(){
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.00001, 10000000000 );
 
    // camera.position.y = -boxSize/2;
-    camera.translateZ( 1 );
+    camera.translateZ( 10000000 );
+    camera.translateY( 10000000 );
     camera.useQuaternion = true;
     ////////////
     //renderer//
@@ -124,7 +125,7 @@ $(document).ready(function(){
     //axes//
     ////////
 
-    axes = buildAxes( 2500 );
+    axes = buildAxes( skySize );
     scene.add(axes);
 
     
@@ -247,7 +248,11 @@ $(document).ready(function(){
         requestAnimationFrame( render );
         renderer.render(scene, camera);
         controls.update(); //for cameras
-     
+        for (var i = 1; i<pivot.length ; i++){      //without sun, oso begin with 1
+        
+            revolution(pivot[i], revolveSpeed[i])
+
+        }
         stats.update();
         /*                                                            //this comment can use to reflect real world day/night condition
         var currentMinute = calculateMinute(hours, minute);
@@ -390,4 +395,8 @@ function onWindowResize() {
 
     renderer.setSize(window.innerWidth, window.innerHeight);
 
+}
+
+function revolution(mesh, speed){
+    mesh.rotation.z += speed/1000;
 }

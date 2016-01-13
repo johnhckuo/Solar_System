@@ -10,7 +10,7 @@ function createSatelliteTrack(radius){
 }
 
 function createTrack(i){
-    var geometry = new THREE.RingGeometry( earthRange*rangeProportion[i]-1, earthRange*rangeProportion[i], 32 );
+    var geometry = new THREE.RingGeometry( earthRange*rangeProportion[i]-1, earthRange*rangeProportion[i], 64 );
     var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
     var ring = new THREE.Line( geometry, material ) ;
     ring.rotation.x = Math.PI/2;
@@ -53,7 +53,7 @@ function createEarth(earthSize, earthRange){
     
 
     var geometry    = new THREE.SphereGeometry(earthSize, 32, 32)
-    var material    = new THREE.MeshPhongMaterial({
+    var material    = new THREE.MeshLambertMaterial({
         map     : THREE.ImageUtils.loadTexture('img/earthmap1k.jpg'),
         bumpMap     : THREE.ImageUtils.loadTexture('img/earthbump1k.jpg'),
         bumpScale   : 0.05,
