@@ -39,8 +39,7 @@ $(document).ready(function(){
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.00001, 10000000000 );
 
    // camera.position.y = -boxSize/2;
-    camera.translateZ( 10000000 );
-    camera.translateY( 10000000 );
+    camera.position.set(0, 10000000, 10000000 )
     camera.useQuaternion = true;
     ////////////
     //renderer//
@@ -225,6 +224,10 @@ $(document).ready(function(){
     pivot[8].add( neptune );
     pivot[9].add( pluto );
     
+    scene.updateMatrixWorld();
+    for (var i = 1; i <pivot.length ; i++){
+        pivot[i].updateMatrixWorld();
+    }
     //moon.add(camera);
 
     //parent.rotation.x += Math.PI*2;
@@ -252,8 +255,9 @@ $(document).ready(function(){
         planetSpin();
         stats.update();
 
-            
 
+        TWEEN.update();
+        
 
     };
 
@@ -278,31 +282,76 @@ function calculateMinute(hours,minute){
 function switchCamera(obj){
     console.log(obj.innerHTML)
     var text = obj.innerHTML;
-    camera.position.set(0,0,0);
     switch (text){
         case 'Sun':
             Sun.add(camera);
             test = 1;
             camera.position = Sun.position.clone();
             camera.translateZ(earthSize*calculateVolume(radius[0])*2)
+            break;
         case 'Mercury':
+            /*
             mercury.add(camera);
             camera.position = mercury.position.clone();
             camera.translateZ(earthSize*calculateVolume(radius[1])*2)
+            */
+            // console.log(mercury.position)
+            // console.log(camera.position);
+            // var tween = new TWEEN.Tween( camera.position )
+            //     .to( mercury.position, 2000 )
+            //     .onUpdate( function () {
+            //             camera.position.x = mercury.position.x;
+            //             camera.position.y = mercury.position.y;
+            //             camera.position.z = mercury.position.z;
+            //     } )
+            //     .start();
+            var vector = new THREE.Vector3();
+            vector.setFromMatrixPosition( mercury.matrixWorld );
+            var position = camera.position.clone();
+            var tween = new TWEEN.Tween(position).to(vector, 4000);
+
+            tween.onUpdate(function(){
+                camera.position.x = position.x;
+                camera.position.y = position.y;
+                camera.position.z = position.z;
+            });
+
+            tween.start();
+            mercury.add(camera);
+            //camera.translateZ(earthSize*calculateVolume(radius[1])*2);
             break;
         case 'Venus':
+
             venus.add(camera);
             camera.position = venus.position.clone();
             camera.translateZ(earthSize*calculateVolume(radius[2])*2)
+
+            //camera.lookAt(venus);
+            //camera.target.position.copy(venus);
             break;
 
         case 'Earth':
-            earth.add(camera);
+            // earth.add(camera);
             
-            console.log(camera.position.x+'/'+camera.position.y+'/'+camera.position.z);
-            console.log(mars.position.x+'/'+mars.position.y+'/'+mars.position.z);
-            camera.position = earth.position.clone();
-            camera.translateZ(earthSize*calculateVolume(radius[3])*2)
+            // console.log(camera.position.x+'/'+camera.position.y+'/'+camera.position.z);
+            // console.log(mars.position.x+'/'+mars.position.y+'/'+mars.position.z);
+            // camera.position = earth.position.clone();
+            // camera.translateZ(earthSize*calculateVolume(radius[3])*2)
+
+
+            var vector = new THREE.Vector3();
+            vector.setFromMatrixPosition( earth.matrixWorld );
+            var position = camera.position.clone();
+            var tween = new TWEEN.Tween(position).to(vector, 4000);
+
+            tween.onUpdate(function(){
+                camera.position.x = position.x;
+                camera.position.y = position.y;
+                camera.position.z = position.z;
+            });
+
+            tween.start();
+            earth.add(camera);
             break;
         case 'Moon':
             moon.add(camera);
